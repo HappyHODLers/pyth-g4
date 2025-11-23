@@ -33,16 +33,7 @@ export function Chatbot() {
     if (chatMessages.length === 0) {
       addChatMessage({
         role: 'assistant',
-        content: `Welcome to PythAI Trading Agent! 👋
-
-I'm your expert guide for building with Pyth Network. I can help you with:
-
-🔮 **Pyth Price Feeds** - Real-time oracle data for 400+ assets
-🎲 **Pyth Entropy** - Verifiable on-chain randomness
-💡 **Hackathon Ideas** - Innovative use cases combining both
-🛠️ **Technical Implementation** - Best practices and code guidance
-
-What would you like to know about building with Pyth?`,
+        content: `Hello! How can I help you today?`,
       });
     }
   }, []);
@@ -76,7 +67,7 @@ What would you like to know about building with Pyth?`,
       console.error('Error getting AI response:', error);
       addChatMessage({
         role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again or check your API key configuration.',
+        content: 'Error processing your request. Please try again.',
       });
     } finally {
       setIsLoadingChat(false);
