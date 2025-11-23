@@ -118,45 +118,6 @@ function App() {
           </div>
         </div>
 
-        {/* Info Section - Bento Grid Style */}
-        <div className="mt-10 grid md:grid-cols-3 gap-4">
-          <Card className="border-4 border-[#DC9F69] rounded-3xl shadow-lg bg-gradient-to-br from-[#DC9F69]/20 to-[#DC9F69]/40 hover:shadow-xl transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-lg text-[#7E533D] font-black">🎯 Hackathon Ready</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-[#7E533D] font-medium">
-                This application demonstrates both Pyth Price Feeds (Pull Oracle) and Pyth Entropy, 
-                making it eligible for multiple prize categories ✨
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-4 border-[#00B5E6] rounded-3xl shadow-lg bg-gradient-to-br from-[#00B5E6]/20 to-[#00B5E6]/40 hover:shadow-xl transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-lg text-[#7E533D] font-black">⛓️ Pull Oracle Flow</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-[#7E533D] font-medium">
-                Complete implementation of Fetch → Update → Consume workflow as required by 
-                the hackathon qualification criteria 🚀
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-4 border-[#3E9138] rounded-3xl shadow-lg bg-gradient-to-br from-[#3E9138]/20 to-[#3E9138]/40 hover:shadow-xl transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-lg text-[#7E533D] font-black">🤖 AI Assistant</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-[#7E533D] font-medium">
-                Chat with an AI expert trained on Pyth Network to discover innovative use cases 
-                and get technical guidance 💡
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Footer */}
         <footer className="mt-10 text-center pb-8">
           <div className="inline-block bg-white/80 backdrop-blur-sm border-4 border-[#7E533D] rounded-3xl px-8 py-4 shadow-lg">
