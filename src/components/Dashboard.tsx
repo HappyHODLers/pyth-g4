@@ -282,24 +282,24 @@ RECOMENDACIÓN: [tu recomendación]
     <div className="space-y-6">
       {/* Wallet Connection */}
       {!isWalletConnected ? (
-        <Card className="border-4 border-purple-200 rounded-3xl shadow-lg bg-gradient-to-br from-purple-50 to-pink-50">
+        <Card className="border-4 border-[#7E533D] rounded-3xl shadow-lg bg-gradient-to-br from-[#DC9F69]/20 to-orange-50">
           <CardContent className="pt-6">
             <div className="text-center">
-              <p className="text-sm text-purple-600 font-medium mb-4">
+              <p className="text-sm text-[#7E533D] font-medium mb-4">
                 💼 Connect your wallet to interact with Pyth contracts on-chain ✨
               </p>
-              <Button onClick={connectWallet} className="rounded-2xl border-2 border-purple-300 shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-purple-400 to-pink-400 text-white font-bold">
+              <Button onClick={connectWallet} className="rounded-2xl border-2 border-[#7E533D] shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-[#DC9F69] to-[#00B5E6] text-white font-bold">
                 🔗 Connect Wallet
               </Button>
             </div>
           </CardContent>
         </Card>
       ) : (
-        <Card className="border-4 border-green-200 rounded-3xl shadow-lg bg-gradient-to-br from-green-50 to-blue-50">
+        <Card className="border-4 border-[#3E9138] rounded-3xl shadow-lg bg-gradient-to-br from-[#3E9138]/20 to-[#00B5E6]/20">
           <CardContent className="pt-6">
             <div className="text-center">
-              <p className="text-sm text-green-700 font-bold">
-                ✅ Connected: <span className="font-mono bg-white/80 px-3 py-1 rounded-2xl border-2 border-green-300">{walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}</span>
+              <p className="text-sm text-[#3E9138] font-bold">
+                ✅ Connected: <span className="font-mono bg-white/80 px-3 py-1 rounded-2xl border-2 border-[#3E9138]">{walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}</span>
               </p>
             </div>
           </CardContent>
@@ -307,27 +307,27 @@ RECOMENDACIÓN: [tu recomendación]
       )}
 
       <Tabs defaultValue="price-feeds" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 border-4 border-purple-200 rounded-3xl p-2 shadow-lg">
-          <TabsTrigger value="price-feeds" className="rounded-2xl font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-400 data-[state=active]:to-pink-400 data-[state=active]:text-white data-[state=active]:shadow-md">📊 Price Feeds</TabsTrigger>
-          <TabsTrigger value="entropy" className="rounded-2xl font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-400 data-[state=active]:to-purple-400 data-[state=active]:text-white data-[state=active]:shadow-md">🎲 Entropy</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 bg-gradient-to-r from-[#DC9F69]/30 via-orange-100 to-cyan-100 border-4 border-[#7E533D] rounded-3xl p-2 shadow-lg">
+          <TabsTrigger value="price-feeds" className="rounded-2xl font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#DC9F69] data-[state=active]:to-[#00B5E6] data-[state=active]:text-white data-[state=active]:shadow-md">📊 Price Feeds</TabsTrigger>
+          <TabsTrigger value="entropy" className="rounded-2xl font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#00B5E6] data-[state=active]:to-[#3E9138] data-[state=active]:text-white data-[state=active]:shadow-md">🎲 Entropy</TabsTrigger>
         </TabsList>
 
         {/* Price Feeds Tab */}
         <TabsContent value="price-feeds" className="space-y-4">
           {/* Price Feed Selector */}
-          <Card className="border-4 border-blue-200 rounded-3xl shadow-lg bg-gradient-to-br from-blue-50 to-purple-50">
+          <Card className="border-4 border-[#00B5E6] rounded-3xl shadow-lg bg-gradient-to-br from-[#00B5E6]/20 to-cyan-50">
             <CardHeader>
-              <CardTitle className="text-blue-700 font-black">🔍 Select Price Feed</CardTitle>
-              <CardDescription className="text-blue-600 font-medium">
+              <CardTitle className="text-[#7E533D] font-black">🔍 Select Price Feed</CardTitle>
+              <CardDescription className="text-[#7E533D] font-medium">
                 Choose from 400+ Pyth price feeds for real-time market data ✨
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Select value={selectedPriceFeed} onValueChange={setSelectedPriceFeed}>
-                <SelectTrigger className="rounded-2xl border-2 border-blue-300 font-medium shadow-sm">
+                <SelectTrigger className="rounded-2xl border-2 border-[#00B5E6] font-medium shadow-sm">
                   <SelectValue placeholder="Select a price feed" />
                 </SelectTrigger>
-                <SelectContent className="rounded-2xl border-2 border-blue-200">
+                <SelectContent className="rounded-2xl border-2 border-[#00B5E6]">
                   {PRICE_FEEDS.map((feed) => (
                     <SelectItem key={feed.id} value={feed.id}>
                       {feed.symbol} - {feed.name}
@@ -339,10 +339,10 @@ RECOMENDACIÓN: [tu recomendación]
           </Card>
 
           {/* Timeframe Selector */}
-          <Card className="border-4 border-pink-200 rounded-3xl shadow-lg bg-gradient-to-br from-pink-50 to-yellow-50">
+          <Card className="border-4 border-[#DC9F69] rounded-3xl shadow-lg bg-gradient-to-br from-[#DC9F69]/20 to-orange-50">
             <CardHeader>
-              <CardTitle className="text-pink-700 font-black">⏱️ Intervalo de Actualización</CardTitle>
-              <CardDescription className="text-pink-600 font-medium">
+              <CardTitle className="text-[#7E533D] font-black">⏱️ Intervalo de Actualización</CardTitle>
+              <CardDescription className="text-[#7E533D] font-medium">
                 Selecciona la frecuencia de actualización de precios 🔄
               </CardDescription>
             </CardHeader>
@@ -413,37 +413,37 @@ RECOMENDACIÓN: [tu recomendación]
                   4 horas
                 </Button>
               </div>
-              <p className="text-xs text-pink-600 font-medium mt-3 bg-white/80 rounded-2xl px-3 py-2 border-2 border-pink-200">
+              <p className="text-xs text-[#7E533D] font-medium mt-3 bg-white/80 rounded-2xl px-3 py-2 border-2 border-[#DC9F69]">
                 ⚡ Actualizando cada {timeframe < 60 ? `${timeframe} segundos` : timeframe === 60 ? '1 minuto' : timeframe < 3600 ? `${timeframe / 60} minutos` : `${timeframe / 3600} horas`}
               </p>
             </CardContent>
           </Card>
 
           {/* Current Price Card */}
-          <Card className="border-4 border-purple-300 rounded-3xl shadow-xl bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+          <Card className="border-4 border-[#7E533D] rounded-3xl shadow-xl bg-gradient-to-br from-[#DC9F69]/20 via-orange-50 to-cyan-50">
             <CardHeader>
-              <CardTitle className="flex items-center justify-between text-purple-700 font-black">
+              <CardTitle className="flex items-center justify-between text-[#7E533D] font-black">
                 <span>💰 {selectedFeed?.symbol}</span>
                 <Button 
                   variant="outline" 
                   size="icon"
                   onClick={fetchPrice}
                   disabled={isPolling}
-                  className="rounded-2xl border-2 border-purple-300 shadow-sm hover:shadow-md transition-all"
+                  className="rounded-2xl border-2 border-[#7E533D] shadow-sm hover:shadow-md transition-all"
                 >
                   <RefreshCw className={`w-4 h-4 ${isPolling ? 'animate-spin' : ''}`} />
                 </Button>
               </CardTitle>
-              <CardDescription className="text-purple-600 font-medium">Real-time price from Hermes ✨</CardDescription>
+              <CardDescription className="text-[#7E533D] font-medium">Real-time price from Hermes ✨</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="bg-white/80 rounded-3xl p-4 border-4 border-purple-200 shadow-lg">
-                  <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
+                <div className="bg-white/80 rounded-3xl p-4 border-4 border-[#DC9F69] shadow-lg">
+                  <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#7E533D] to-[#D92B29]">
                     ${formatPrice(displayPrice, 2)}
                   </div>
                   {currentPrice && (
-                    <div className="text-sm text-purple-600 font-medium mt-2">
+                    <div className="text-sm text-[#7E533D] font-medium mt-2">
                       🕒 Updated: {formatTimestamp(currentPrice.publishTime)}
                     </div>
                   )}
@@ -453,7 +453,7 @@ RECOMENDACIÓN: [tu recomendación]
                     <Button 
                       onClick={handleUpdatePrice} 
                       disabled={!isWalletConnected || isUpdatingPrice}
-                      className="flex-1 rounded-2xl border-2 border-green-300 shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-green-400 to-blue-400 text-white font-bold"
+                      className="flex-1 rounded-2xl border-2 border-[#3E9138] shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-[#3E9138] to-[#00B5E6] text-white font-bold"
                     >
                       {isUpdatingPrice ? (
                         <>
@@ -471,7 +471,7 @@ RECOMENDACIÓN: [tu recomendación]
                       onClick={handleGetOnChainPrice}
                       disabled={!isWalletConnected}
                       variant="outline"
-                      className="flex-1 rounded-2xl border-2 border-blue-300 shadow-sm hover:shadow-md transition-all font-bold"
+                      className="flex-1 rounded-2xl border-2 border-[#00B5E6] shadow-sm hover:shadow-md transition-all font-bold hover:bg-[#00B5E6]/10"
                     >
                       🔍 Read On-Chain
                     </Button>
@@ -479,7 +479,7 @@ RECOMENDACIÓN: [tu recomendación]
                   <Button 
                     onClick={getAIRecommendation}
                     disabled={isGettingRecommendation || priceHistory.length < 5}
-                    className="w-full rounded-2xl border-2 border-pink-300 shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-pink-400 to-purple-400 text-white font-bold"
+                    className="w-full rounded-2xl border-2 border-[#D92B29] shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-[#D92B29] to-[#DC9F69] text-white font-bold"
                   >
                     {isGettingRecommendation ? (
                       <>
@@ -499,26 +499,26 @@ RECOMENDACIÓN: [tu recomendación]
 
           {/* AI Recommendation Card */}
           {aiRecommendation && (
-            <Card className="border-4 border-yellow-300 rounded-3xl shadow-xl bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50 animate-in fade-in duration-500">
+            <Card className="border-4 border-[#DC9F69] rounded-3xl shadow-xl bg-gradient-to-br from-[#DC9F69]/30 via-orange-50 to-yellow-50 animate-in fade-in duration-500">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-yellow-700 font-black">
+                <CardTitle className="flex items-center gap-2 text-[#7E533D] font-black">
                   🤖 Recomendación de IA 💡
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => setAiRecommendation(null)}
-                    className="ml-auto rounded-2xl hover:bg-red-100 border-2 border-red-300"
+                    className="ml-auto rounded-2xl hover:bg-[#D92B29]/10 border-2 border-[#D92B29]"
                   >
                     ✕
                   </Button>
                 </CardTitle>
-                <CardDescription className="text-yellow-600 font-medium">Análisis en tiempo real de {selectedFeed?.symbol} ✨</CardDescription>
+                <CardDescription className="text-[#7E533D] font-medium">Análisis en tiempo real de {selectedFeed?.symbol} ✨</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-white/90 border-4 border-yellow-200 rounded-3xl p-4 whitespace-pre-wrap font-mono text-sm shadow-inner">
+                <div className="bg-white/90 border-4 border-[#DC9F69] rounded-3xl p-4 whitespace-pre-wrap font-mono text-sm shadow-inner">
                   {aiRecommendation}
                 </div>
-                <p className="text-xs text-yellow-700 font-bold mt-3 bg-yellow-100 rounded-2xl px-3 py-2 border-2 border-yellow-300">
+                <p className="text-xs text-[#7E533D] font-bold mt-3 bg-[#DC9F69]/20 rounded-2xl px-3 py-2 border-2 border-[#DC9F69]">
                   ⚠️ Esta es una recomendación generada por IA y no constituye asesoría financiera. 
                   Siempre haz tu propia investigación antes de tomar decisiones de inversión 📊
                 </p>
@@ -527,29 +527,29 @@ RECOMENDACIÓN: [tu recomendación]
           )}
 
           {/* Price Chart */}
-          <Card className="border-4 border-blue-300 rounded-3xl shadow-lg bg-gradient-to-br from-blue-50 to-purple-50">
+          <Card className="border-4 border-[#00B5E6] rounded-3xl shadow-lg bg-gradient-to-br from-[#00B5E6]/20 to-cyan-50">
             <CardHeader>
-              <CardTitle className="text-blue-700 font-black">📈 Price History</CardTitle>
-              <CardDescription className="text-blue-600 font-medium">
+              <CardTitle className="text-[#7E533D] font-black">📈 Price History</CardTitle>
+              <CardDescription className="text-[#7E533D] font-medium">
                 Movimiento de precio en tiempo real desde Hermes 🔄
                 {priceHistory.length > 0 && ` • ${priceHistory.length} puntos de datos ✨`}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-white/80 rounded-3xl p-4 border-2 border-blue-200">
+              <div className="bg-white/80 rounded-3xl p-4 border-2 border-[#00B5E6]">
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={priceHistory}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#00B5E6" opacity={0.3} />
                     <XAxis 
                       dataKey="timestamp" 
                       tickFormatter={(ts) => new Date(ts * 1000).toLocaleTimeString()}
-                      stroke="#6366f1"
+                      stroke="#7E533D"
                     />
-                    <YAxis domain={['auto', 'auto']} stroke="#6366f1" />
+                    <YAxis domain={['auto', 'auto']} stroke="#7E533D" />
                     <Tooltip 
                       labelFormatter={(ts) => new Date((ts as number) * 1000).toLocaleString()}
                       formatter={(value: any) => ['$' + formatPrice(value, 2), 'Price']}
-                      contentStyle={{ borderRadius: '1rem', border: '2px solid #c7d2fe' }}
+                      contentStyle={{ borderRadius: '1rem', border: '2px solid #DC9F69' }}
                     />
                     <Line 
                       type="monotone" 
@@ -560,9 +560,9 @@ RECOMENDACIÓN: [tu recomendación]
                     />
                     <defs>
                       <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stopColor="#a855f7" />
-                        <stop offset="50%" stopColor="#ec4899" />
-                        <stop offset="100%" stopColor="#3b82f6" />
+                        <stop offset="0%" stopColor="#DC9F69" />
+                        <stop offset="50%" stopColor="#D92B29" />
+                        <stop offset="100%" stopColor="#00B5E6" />
                       </linearGradient>
                     </defs>
                 </LineChart>
@@ -572,34 +572,34 @@ RECOMENDACIÓN: [tu recomendación]
           </Card>
 
           {/* Pull Oracle Workflow Explanation */}
-          <Card className="border-4 border-green-200 rounded-3xl shadow-lg bg-gradient-to-br from-green-50 to-blue-50">
+          <Card className="border-4 border-[#3E9138] rounded-3xl shadow-lg bg-gradient-to-br from-[#3E9138]/20 to-[#00B5E6]/20">
             <CardHeader>
-              <CardTitle className="text-green-700 font-black">⛓️ Pyth Pull Oracle Workflow</CardTitle>
+              <CardTitle className="text-[#7E533D] font-black">⛓️ Pyth Pull Oracle Workflow</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center flex-shrink-0 shadow-md border-2 border-purple-300">
+                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#DC9F69] to-[#00B5E6] flex items-center justify-center flex-shrink-0 shadow-md border-2 border-[#DC9F69]">
                     <span className="text-white font-black">1</span>
                   </div>
-                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-purple-200">
-                    <strong className="text-purple-700">🔽 Fetch from Hermes:</strong> <span className="text-purple-600 font-medium">Price data is retrieved from Pyth's Hermes API</span>
+                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-[#DC9F69]">
+                    <strong className="text-[#7E533D]">🔽 Fetch from Hermes:</strong> <span className="text-[#7E533D] font-medium">Price data is retrieved from Pyth's Hermes API</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center flex-shrink-0 shadow-md border-2 border-blue-300">
+                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#00B5E6] to-[#3E9138] flex items-center justify-center flex-shrink-0 shadow-md border-2 border-[#00B5E6]">
                     <span className="text-white font-black">2</span>
                   </div>
-                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-blue-200">
-                    <strong className="text-blue-700">📤 Update On-Chain:</strong> <span className="text-blue-600 font-medium">Submit price data to the Pyth contract using updatePriceFeeds</span>
+                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-[#00B5E6]">
+                    <strong className="text-[#7E533D]">📤 Update On-Chain:</strong> <span className="text-[#7E533D] font-medium">Submit price data to the Pyth contract using updatePriceFeeds</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-green-400 to-blue-400 flex items-center justify-center flex-shrink-0 shadow-md border-2 border-green-300">
+                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#3E9138] to-[#DC9F69] flex items-center justify-center flex-shrink-0 shadow-md border-2 border-[#3E9138]">
                     <span className="text-white font-black">3</span>
                   </div>
-                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-green-200">
-                    <strong className="text-green-700">✅ Consume Price:</strong> <span className="text-green-600 font-medium">Your smart contract reads the fresh price from the Pyth contract</span>
+                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-[#3E9138]">
+                    <strong className="text-[#7E533D]">✅ Consume Price:</strong> <span className="text-[#7E533D] font-medium">Your smart contract reads the fresh price from the Pyth contract</span>
                   </div>
                 </div>
               </div>
@@ -609,13 +609,13 @@ RECOMENDACIÓN: [tu recomendación]
 
         {/* Entropy Tab */}
         <TabsContent value="entropy" className="space-y-4">
-          <Card className="border-4 border-purple-300 rounded-3xl shadow-xl bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+          <Card className="border-4 border-[#7E533D] rounded-3xl shadow-xl bg-gradient-to-br from-[#DC9F69]/20 via-orange-50 to-cyan-50">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-purple-700 font-black">
+              <CardTitle className="flex items-center gap-2 text-[#7E533D] font-black">
                 <Dice6 className="w-6 h-6" />
                 🎲 Pyth Entropy Random Number Generator
               </CardTitle>
-              <CardDescription className="text-purple-600 font-medium">
+              <CardDescription className="text-[#7E533D] font-medium">
                 Generate verifiable random numbers on-chain with cryptographic security 🔒✨
               </CardDescription>
             </CardHeader>
@@ -623,7 +623,7 @@ RECOMENDACIÓN: [tu recomendación]
               <Button 
                 onClick={handleRequestRandom}
                 disabled={!isWalletConnected || isRequestingRandom}
-                className="w-full rounded-2xl border-2 border-purple-300 shadow-lg hover:shadow-xl transition-all bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-white font-bold"
+                className="w-full rounded-2xl border-2 border-[#7E533D] shadow-lg hover:shadow-xl transition-all bg-gradient-to-r from-[#DC9F69] via-[#D92B29] to-[#00B5E6] text-white font-bold"
                 size="lg"
               >
                 {isRequestingRandom ? (
@@ -640,11 +640,11 @@ RECOMENDACIÓN: [tu recomendación]
               </Button>
 
               {randomNumberRequest && (
-                <div className="border-4 border-yellow-200 rounded-3xl p-4 space-y-3 bg-gradient-to-br from-yellow-50 to-pink-50 shadow-lg">
+                <div className="border-4 border-[#DC9F69] rounded-3xl p-4 space-y-3 bg-gradient-to-br from-[#DC9F69]/30 to-orange-50 shadow-lg">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-yellow-700">📦 Request Status</span>
+                    <span className="text-sm font-bold text-[#7E533D]">📦 Request Status</span>
                     <div className={`flex items-center gap-2 text-sm font-bold px-3 py-1 rounded-2xl border-2 ${
-                      randomNumberRequest.status === 'fulfilled' ? 'text-green-700 bg-green-100 border-green-300' : 'text-yellow-700 bg-yellow-100 border-yellow-300'
+                      randomNumberRequest.status === 'fulfilled' ? 'text-[#3E9138] bg-[#3E9138]/20 border-[#3E9138]' : 'text-[#D92B29] bg-[#D92B29]/20 border-[#D92B29]'
                     }`}>
                       {randomNumberRequest.status === 'fulfilled' ? (
                         <><CheckCircle2 className="w-4 h-4" /> ✅ Fulfilled</>
@@ -653,35 +653,35 @@ RECOMENDACIÓN: [tu recomendación]
                       )}
                     </div>
                   </div>
-                  <div className="text-xs space-y-2 bg-white/80 rounded-2xl p-3 border-2 border-yellow-200">
-                    <div className="font-medium text-yellow-700"><strong>🎫 Request ID:</strong> {randomNumberRequest.requestId}</div>
-                    <div className="font-medium text-yellow-700"><strong>🧱 Block:</strong> {randomNumberRequest.blockNumber}</div>
+                  <div className="text-xs space-y-2 bg-white/80 rounded-2xl p-3 border-2 border-[#DC9F69]">
+                    <div className="font-medium text-[#7E533D]"><strong>🎫 Request ID:</strong> {randomNumberRequest.requestId}</div>
+                    <div className="font-medium text-[#7E533D]"><strong>🧱 Block:</strong> {randomNumberRequest.blockNumber}</div>
                   </div>
                 </div>
               )}
 
               {generatedRandomNumber && (
-                <div className="border-4 border-green-200 rounded-3xl p-4 space-y-3 bg-gradient-to-br from-green-50 to-blue-50 shadow-lg animate-in fade-in duration-500">
-                  <div className="text-sm font-black text-green-700">✨ Generated Random Number</div>
-                  <div className="font-mono text-xs break-all bg-white/90 p-3 rounded-2xl border-2 border-green-300 font-medium text-green-700">
+                <div className="border-4 border-[#3E9138] rounded-3xl p-4 space-y-3 bg-gradient-to-br from-[#3E9138]/20 to-[#00B5E6]/20 shadow-lg animate-in fade-in duration-500">
+                  <div className="text-sm font-black text-[#7E533D]">✨ Generated Random Number</div>
+                  <div className="font-mono text-xs break-all bg-white/90 p-3 rounded-2xl border-2 border-[#3E9138] font-medium text-[#7E533D]">
                     {generatedRandomNumber}
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-center pt-2">
-                    <div className="border-4 border-pink-200 rounded-2xl p-3 bg-gradient-to-br from-pink-50 to-purple-50 shadow-md hover:shadow-lg transition-shadow">
-                      <div className="text-xs text-pink-600 font-bold">🔢 1-100</div>
-                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">
+                    <div className="border-4 border-[#DC9F69] rounded-2xl p-3 bg-gradient-to-br from-[#DC9F69]/20 to-orange-50 shadow-md hover:shadow-lg transition-shadow">
+                      <div className="text-xs text-[#7E533D] font-bold">🔢 1-100</div>
+                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#DC9F69] to-[#D92B29]">
                         {parseRandomNumberToRange(generatedRandomNumber, 100)}
                       </div>
                     </div>
-                    <div className="border-4 border-blue-200 rounded-2xl p-3 bg-gradient-to-br from-blue-50 to-purple-50 shadow-md hover:shadow-lg transition-shadow">
-                      <div className="text-xs text-blue-600 font-bold">🔢 1-1000</div>
-                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">
+                    <div className="border-4 border-[#00B5E6] rounded-2xl p-3 bg-gradient-to-br from-[#00B5E6]/20 to-cyan-50 shadow-md hover:shadow-lg transition-shadow">
+                      <div className="text-xs text-[#7E533D] font-bold">🔢 1-1000</div>
+                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00B5E6] to-[#3E9138]">
                         {parseRandomNumberToRange(generatedRandomNumber, 1000)}
                       </div>
                     </div>
-                    <div className="border-4 border-purple-200 rounded-2xl p-3 bg-gradient-to-br from-purple-50 to-pink-50 shadow-md hover:shadow-lg transition-shadow">
-                      <div className="text-xs text-purple-600 font-bold">🎲 1-6 (Dice)</div>
-                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
+                    <div className="border-4 border-[#D92B29] rounded-2xl p-3 bg-gradient-to-br from-[#D92B29]/20 to-orange-50 shadow-md hover:shadow-lg transition-shadow">
+                      <div className="text-xs text-[#7E533D] font-bold">🎲 1-6 (Dice)</div>
+                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D92B29] to-[#DC9F69]">
                         {parseRandomNumberToRange(generatedRandomNumber, 6)}
                       </div>
                     </div>
@@ -692,34 +692,34 @@ RECOMENDACIÓN: [tu recomendación]
           </Card>
 
           {/* Entropy Use Cases */}
-          <Card className="border-4 border-pink-200 rounded-3xl shadow-lg bg-gradient-to-br from-pink-50 to-yellow-50">
+          <Card className="border-4 border-[#DC9F69] rounded-3xl shadow-lg bg-gradient-to-br from-[#DC9F69]/20 to-orange-50">
             <CardHeader>
-              <CardTitle className="text-pink-700 font-black">🌟 Use Cases for Pyth Entropy</CardTitle>
+              <CardTitle className="text-[#7E533D] font-black">🌟 Use Cases for Pyth Entropy</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-purple-200 hover:shadow-md transition-shadow">
+                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#DC9F69] hover:shadow-md transition-shadow">
                   <span className="text-3xl">🎮</span>
                   <div>
-                    <strong className="text-purple-700">Gaming:</strong> <span className="text-purple-600 font-medium">Fair loot drops, enemy spawns, procedural generation</span>
+                    <strong className="text-[#7E533D]">Gaming:</strong> <span className="text-[#7E533D] font-medium">Fair loot drops, enemy spawns, procedural generation</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-pink-200 hover:shadow-md transition-shadow">
+                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#D92B29] hover:shadow-md transition-shadow">
                   <span className="text-3xl">🎨</span>
                   <div>
-                    <strong className="text-pink-700">NFTs:</strong> <span className="text-pink-600 font-medium">Randomized traits, reveal mechanics, generative art</span>
+                    <strong className="text-[#7E533D]">NFTs:</strong> <span className="text-[#7E533D] font-medium">Randomized traits, reveal mechanics, generative art</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-yellow-200 hover:shadow-md transition-shadow">
+                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#00B5E6] hover:shadow-md transition-shadow">
                   <span className="text-3xl">🎲</span>
                   <div>
-                    <strong className="text-yellow-700">Lotteries:</strong> <span className="text-yellow-600 font-medium">Provably fair winner selection, prize distribution</span>
+                    <strong className="text-[#7E533D]">Lotteries:</strong> <span className="text-[#7E533D] font-medium">Provably fair winner selection, prize distribution</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-blue-200 hover:shadow-md transition-shadow">
+                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#3E9138] hover:shadow-md transition-shadow">
                   <span className="text-3xl">📊</span>
                   <div>
-                    <strong className="text-blue-700">DeFi:</strong> <span className="text-blue-600 font-medium">Random sampling, fair liquidations, dynamic yields</span>
+                    <strong className="text-[#7E533D]">DeFi:</strong> <span className="text-[#7E533D] font-medium">Random sampling, fair liquidations, dynamic yields</span>
                   </div>
                 </div>
               </div>

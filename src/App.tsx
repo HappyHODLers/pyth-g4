@@ -63,20 +63,20 @@ function App() {
 
       {/* Settings Panel */}
       {showSettings && (
-        <div className="bg-gradient-to-r from-yellow-50 via-pink-50 to-purple-50 border-b-4 border-yellow-300">
+        <div className="bg-gradient-to-r from-[#DC9F69]/20 via-orange-50 to-cyan-50 border-b-4 border-[#7E533D]">
           <div className="container mx-auto px-6 py-6">
-            <Card className="border-4 border-purple-200 rounded-3xl shadow-xl bg-white/80 backdrop-blur-sm">
+            <Card className="border-4 border-[#7E533D] rounded-3xl shadow-xl bg-white/80 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-purple-600 flex items-center gap-2">
+                <CardTitle className="text-[#7E533D] flex items-center gap-2">
                   ⚙️ Settings
                 </CardTitle>
-                <CardDescription className="text-purple-500">
+                <CardDescription className="text-[#7E533D]">
                   Configure your API keys for enhanced functionality ✨
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="text-sm font-bold mb-2 block text-purple-700">
+                  <label className="text-sm font-bold mb-2 block text-[#7E533D]">
                     🔑 DeepSeek API Key (Optional)
                   </label>
                   <Input
@@ -84,17 +84,17 @@ function App() {
                     placeholder="sk-..."
                     value={tempApiKey}
                     onChange={(e) => setTempApiKey(e.target.value)}
-                    className="rounded-2xl border-2 border-purple-300 focus:border-purple-500"
+                    className="rounded-2xl border-2 border-[#7E533D] focus:border-[#00B5E6]"
                   />
-                  <p className="text-xs text-purple-600 mt-2">
-                    Get your API key from <a href="https://platform.deepseek.com" target="_blank" rel="noopener noreferrer" className="underline font-semibold">DeepSeek Platform</a> 🚀
+                  <p className="text-xs text-[#7E533D] mt-2">
+                    Get your API key from <a href="https://platform.deepseek.com" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-[#D92B29]">DeepSeek Platform</a> 🚀
                   </p>
                 </div>
                 <div className="flex gap-3">
-                  <Button onClick={handleSaveSettings} className="rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 shadow-lg">
+                  <Button onClick={handleSaveSettings} className="rounded-2xl bg-gradient-to-r from-[#3E9138] to-[#00B5E6] hover:from-[#3E9138]/80 hover:to-[#00B5E6]/80 shadow-lg">
                     💾 Save Settings
                   </Button>
-                  <Button variant="outline" onClick={() => setShowSettings(false)} className="rounded-2xl border-2 border-purple-300 hover:bg-purple-50">
+                  <Button variant="outline" onClick={() => setShowSettings(false)} className="rounded-2xl border-2 border-[#D92B29] hover:bg-[#D92B29]/10">
                     ❌ Cancel
                   </Button>
                 </div>
@@ -120,36 +120,36 @@ function App() {
 
         {/* Info Section - Bento Grid Style */}
         <div className="mt-10 grid md:grid-cols-3 gap-4">
-          <Card className="border-4 border-pink-200 rounded-3xl shadow-lg bg-gradient-to-br from-pink-50 to-pink-100 hover:shadow-xl transition-shadow">
+          <Card className="border-4 border-[#DC9F69] rounded-3xl shadow-lg bg-gradient-to-br from-[#DC9F69]/20 to-[#DC9F69]/40 hover:shadow-xl transition-shadow">
             <CardHeader>
-              <CardTitle className="text-lg text-pink-700 font-black">🎯 Hackathon Ready</CardTitle>
+              <CardTitle className="text-lg text-[#7E533D] font-black">🎯 Hackathon Ready</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-pink-600 font-medium">
+              <p className="text-sm text-[#7E533D] font-medium">
                 This application demonstrates both Pyth Price Feeds (Pull Oracle) and Pyth Entropy, 
                 making it eligible for multiple prize categories ✨
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-4 border-purple-200 rounded-3xl shadow-lg bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-xl transition-shadow">
+          <Card className="border-4 border-[#00B5E6] rounded-3xl shadow-lg bg-gradient-to-br from-[#00B5E6]/20 to-[#00B5E6]/40 hover:shadow-xl transition-shadow">
             <CardHeader>
-              <CardTitle className="text-lg text-purple-700 font-black">⛓️ Pull Oracle Flow</CardTitle>
+              <CardTitle className="text-lg text-[#7E533D] font-black">⛓️ Pull Oracle Flow</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-purple-600 font-medium">
+              <p className="text-sm text-[#7E533D] font-medium">
                 Complete implementation of Fetch → Update → Consume workflow as required by 
                 the hackathon qualification criteria 🚀
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-4 border-blue-200 rounded-3xl shadow-lg bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-xl transition-shadow">
+          <Card className="border-4 border-[#3E9138] rounded-3xl shadow-lg bg-gradient-to-br from-[#3E9138]/20 to-[#3E9138]/40 hover:shadow-xl transition-shadow">
             <CardHeader>
-              <CardTitle className="text-lg text-blue-700 font-black">🤖 AI Assistant</CardTitle>
+              <CardTitle className="text-lg text-[#7E533D] font-black">🤖 AI Assistant</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-blue-600 font-medium">
+              <p className="text-sm text-[#7E533D] font-medium">
                 Chat with an AI expert trained on Pyth Network to discover innovative use cases 
                 and get technical guidance 💡
               </p>
@@ -159,10 +159,10 @@ function App() {
 
         {/* Footer */}
         <footer className="mt-10 text-center pb-8">
-          <div className="inline-block bg-white/80 backdrop-blur-sm border-4 border-purple-200 rounded-3xl px-8 py-4 shadow-lg">
-            <p className="text-sm text-purple-700 font-bold">
+          <div className="inline-block bg-white/80 backdrop-blur-sm border-4 border-[#7E533D] rounded-3xl px-8 py-4 shadow-lg">
+            <p className="text-sm text-[#7E533D] font-bold">
               Built with 💖 for Pyth Network Hackathon • 
-              <a href="https://pyth.network" target="_blank" rel="noopener noreferrer" className="underline ml-1 hover:text-pink-500 transition-colors">
+              <a href="https://pyth.network" target="_blank" rel="noopener noreferrer" className="underline ml-1 hover:text-[#D92B29] transition-colors">
                 pyth.network ✨
               </a>
             </p>
