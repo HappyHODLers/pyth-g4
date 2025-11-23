@@ -1,6 +1,6 @@
 /**
  * Main App Component
- * PythAI Trading Agent & Dashboard
+ * HappyHODLers Agent & Dashboard
  */
 
 import React, { useState } from 'react';
@@ -45,7 +45,7 @@ function App() {
               </div>
               <div>
                 <h1 className="text-2xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                  PythAI Trading 🎀
+                  HappyHODLers 🎀
                 </h1>
                 <p className="text-xs text-purple-600 font-medium">
                   ✨ Powered by Pyth Network • Price Feeds + Entropy

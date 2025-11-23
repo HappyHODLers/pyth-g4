@@ -1,4 +1,4 @@
-# 🎉 Project Complete: PythAI Trading Agent & Dashboard
+# 🎉 Project Complete: HappyHODLers Agent & Dashboard
 
 ## ✅ What Was Built
 

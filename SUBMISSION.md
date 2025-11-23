@@ -1,8 +1,8 @@
-# PythAI Trading Agent - Submission for Pyth Network Hackathon
+# HappyHODLers Agent - Submission for Pyth Network Hackathon
 
 ## Project Overview
 
-**PythAI Trading Agent & Dashboard** is an all-in-one application demonstrating both Pyth Network Price Feeds (Pull Oracle) and Pyth Entropy (Verifiable Randomness). The project features an AI-powered chatbot agent to guide developers in building innovative dApps using Pyth's infrastructure.
+**HappyHODLers Agent & Dashboard** is an all-in-one application demonstrating both Pyth Network Price Feeds (Pull Oracle) and Pyth Entropy (Verifiable Randomness). The project features an AI-powered chatbot agent to guide developers in building innovative dApps using Pyth's infrastructure.
 
 ## Prize Categories
 

@@ -1,4 +1,4 @@
-# 🎉 Congratulations! Your PythAI Trading Agent is Ready!
+# 🎉 Congratulations! Your HappyHODLers Agent is Ready!
 
 ## ✨ What You've Built
 

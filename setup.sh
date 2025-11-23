@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# PythAI Trading Agent - Setup and Validation Script
+# HappyHODLers Agent - Setup and Validation Script
 # This script will install dependencies and verify the project is ready to run
 
 echo "================================================"
-echo "🚀 PythAI Trading Agent - Setup Script"
+echo "🚀 HappyHODLers Agent - Setup Script"
 echo "================================================"
 echo ""
 

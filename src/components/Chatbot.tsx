@@ -86,7 +86,7 @@ export function Chatbot() {
       <CardHeader className="border-b">
         <CardTitle className="flex items-center gap-2">
           <Bot className="w-6 h-6 text-primary" />
-          PythAI Trading Agent
+          HappyHODLers Agent
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col p-0">

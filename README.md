@@ -1,4 +1,4 @@
-# PythAI Trading Agent & Dashboard
+# HappyHODLers Agent & Dashboard
 
 ![Pyth Network](https://img.shields.io/badge/Pyth-Network-purple)
 ![React](https://img.shields.io/badge/React-18-blue)
