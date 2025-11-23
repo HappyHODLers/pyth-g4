@@ -18,6 +18,13 @@ function App() {
   const { deepseekApiKey, setDeepseekApiKey } = useAppStore();
   const [tempApiKey, setTempApiKey] = useState(deepseekApiKey);
 
+  // Initialize API key on first load
+  React.useEffect(() => {
+    if (!deepseekApiKey) {
+      setDeepseekApiKey('sk-f984577379764c759173c5762d9c25ec');
+    }
+  }, []);
+
   const handleSaveSettings = () => {
     setDeepseekApiKey(tempApiKey);
     setShowSettings(false);

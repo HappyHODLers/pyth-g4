@@ -12,10 +12,14 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
+    global: 'globalThis',
   },
   optimizeDeps: {
     esbuildOptions: {
       target: 'esnext',
+      define: {
+        global: 'globalThis',
+      },
     },
   },
   build: {

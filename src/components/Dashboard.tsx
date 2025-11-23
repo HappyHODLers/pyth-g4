@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { RefreshCw, TrendingUp, Dice6, CheckCircle2, Clock } from 'lucide-react';
+import { RefreshCw, TrendingUp, Dice6, CheckCircle2, Clock, Brain } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -51,6 +51,9 @@ export function Dashboard() {
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const [isPolling, setIsPolling] = useState(false);
+  const [timeframe, setTimeframe] = useState<number>(60); // seconds
+  const [isGettingRecommendation, setIsGettingRecommendation] = useState(false);
+  const [aiRecommendation, setAiRecommendation] = useState<string | null>(null);
 
   // Connect wallet
   const connectWallet = async () => {
@@ -185,20 +188,93 @@ export function Dashboard() {
     poll();
   };
 
-  // Auto-fetch price on mount and when feed changes
+  // Get AI trading recommendation
+  const getAIRecommendation = async () => {
+    if (priceHistory.length < 5) {
+      alert('Necesitas más datos históricos para una recomendación. Espera unos segundos.');
+      return;
+    }
+
+    setIsGettingRecommendation(true);
+    try {
+      const selectedFeed = PRICE_FEEDS.find(f => f.id === selectedPriceFeed);
+      const latestPrice = priceHistory[priceHistory.length - 1].price;
+      const oldestPrice = priceHistory[0].price;
+      const priceChange = ((latestPrice - oldestPrice) / oldestPrice) * 100;
+      
+      const prices = priceHistory.slice(-10).map(p => p.price);
+      const avgPrice = prices.reduce((a, b) => a + b, 0) / prices.length;
+      const volatility = Math.sqrt(prices.reduce((sum, p) => sum + Math.pow(p - avgPrice, 2), 0) / prices.length);
+
+      // Create prompt for AI
+      const prompt = `Como experto analista financiero, analiza estos datos en tiempo real de ${selectedFeed?.symbol}:
+
+Precio actual: $${formatPrice(latestPrice, 2)}
+Cambio reciente: ${priceChange > 0 ? '+' : ''}${priceChange.toFixed(2)}%
+Volatilidad: ${volatility.toFixed(2)}
+Precios últimos 10 puntos: ${prices.map(p => '$' + formatPrice(p, 2)).join(', ')}
+
+Proporciona:
+1. Recomendación: COMPRAR, VENDER o MANTENER
+2. Probabilidad de subida en las próximas horas (%)
+3. Probabilidad de bajada en las próximas horas (%)
+4. Razón breve (máximo 2 líneas)
+5. Nivel de riesgo: BAJO, MEDIO o ALTO
+
+Formato de respuesta:
+RECOMENDACIÓN: [tu recomendación]
+📈 Probabilidad de subida: [X]%
+📉 Probabilidad de bajada: [Y]%
+💡 Razón: [tu análisis breve]
+⚠️ Riesgo: [nivel]`;
+
+      // Call AI service
+      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${useAppStore.getState().deepseekApiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'deepseek-chat',
+          messages: [
+            { role: 'system', content: 'Eres un experto analista financiero que proporciona recomendaciones basadas en datos en tiempo real.' },
+            { role: 'user', content: prompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 500,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al obtener recomendación de IA');
+      }
+
+      const data = await response.json();
+      const recommendation = data.choices[0].message.content;
+      setAiRecommendation(recommendation);
+    } catch (error) {
+      console.error('Error getting AI recommendation:', error);
+      alert('Error al obtener recomendación. Verifica tu API key de DeepSeek.');
+    } finally {
+      setIsGettingRecommendation(false);
+    }
+  };
+
+  // Auto-fetch price on mount and when feed or timeframe changes
   useEffect(() => {
     fetchPrice();
     
-    // Start polling for price updates every 10 seconds
+    // Start polling for price updates based on selected timeframe
     const interval = setInterval(() => {
       if (!isPolling) {
         setIsPolling(true);
         fetchPrice().finally(() => setIsPolling(false));
       }
-    }, 10000);
+    }, timeframe * 1000);
 
     return () => clearInterval(interval);
-  }, [selectedPriceFeed]);
+  }, [selectedPriceFeed, timeframe]);
 
   const selectedFeed = PRICE_FEEDS.find(f => f.id === selectedPriceFeed);
   const displayPrice = currentPrice ? parsePrice(currentPrice.price, currentPrice.expo) : 0;
@@ -263,6 +339,79 @@ export function Dashboard() {
             </CardContent>
           </Card>
 
+          {/* Timeframe Selector */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Intervalo de Actualización</CardTitle>
+              <CardDescription>
+                Selecciona la frecuencia de actualización de precios
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-4 gap-2">
+                <Button 
+                  variant={timeframe === 1 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(1)}
+                >
+                  1 seg
+                </Button>
+                <Button 
+                  variant={timeframe === 3 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(3)}
+                >
+                  3 seg
+                </Button>
+                <Button 
+                  variant={timeframe === 15 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(15)}
+                >
+                  15 seg
+                </Button>
+                <Button 
+                  variant={timeframe === 60 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(60)}
+                >
+                  1 min
+                </Button>
+                <Button 
+                  variant={timeframe === 180 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(180)}
+                >
+                  3 min
+                </Button>
+                <Button 
+                  variant={timeframe === 900 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(900)}
+                >
+                  15 min
+                </Button>
+                <Button 
+                  variant={timeframe === 3600 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(3600)}
+                >
+                  1 hora
+                </Button>
+                <Button 
+                  variant={timeframe === 14400 ? "default" : "outline"} 
+                  size="sm"
+                  onClick={() => setTimeframe(14400)}
+                >
+                  4 horas
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                ⚡ Actualizando cada {timeframe < 60 ? `${timeframe} segundos` : timeframe === 60 ? '1 minuto' : timeframe < 3600 ? `${timeframe / 60} minutos` : `${timeframe / 3600} horas`}
+              </p>
+            </CardContent>
+          </Card>
+
           {/* Current Price Card */}
           <Card>
             <CardHeader>
@@ -291,42 +440,93 @@ export function Dashboard() {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-2">
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Button 
+                      onClick={handleUpdatePrice} 
+                      disabled={!isWalletConnected || isUpdatingPrice}
+                      className="flex-1"
+                    >
+                      {isUpdatingPrice ? (
+                        <>
+                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                          Updating...
+                        </>
+                      ) : (
+                        <>
+                          <TrendingUp className="w-4 h-4 mr-2" />
+                          Update On-Chain
+                        </>
+                      )}
+                    </Button>
+                    <Button 
+                      onClick={handleGetOnChainPrice}
+                      disabled={!isWalletConnected}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      Read On-Chain Price
+                    </Button>
+                  </div>
                   <Button 
-                    onClick={handleUpdatePrice} 
-                    disabled={!isWalletConnected || isUpdatingPrice}
-                    className="flex-1"
+                    onClick={getAIRecommendation}
+                    disabled={isGettingRecommendation || priceHistory.length < 5}
+                    variant="secondary"
+                    className="w-full"
                   >
-                    {isUpdatingPrice ? (
+                    {isGettingRecommendation ? (
                       <>
                         <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                        Updating...
+                        Analizando...
                       </>
                     ) : (
                       <>
-                        <TrendingUp className="w-4 h-4 mr-2" />
-                        Update On-Chain
+                        🤖 Recomendación de IA
                       </>
                     )}
-                  </Button>
-                  <Button 
-                    onClick={handleGetOnChainPrice}
-                    disabled={!isWalletConnected}
-                    variant="outline"
-                    className="flex-1"
-                  >
-                    Read On-Chain Price
                   </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
 
+          {/* AI Recommendation Card */}
+          {aiRecommendation && (
+            <Card className="border-2 border-primary">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  🤖 Recomendación de IA
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={() => setAiRecommendation(null)}
+                    className="ml-auto"
+                  >
+                    ✕
+                  </Button>
+                </CardTitle>
+                <CardDescription>Análisis en tiempo real de {selectedFeed?.symbol}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-muted rounded-lg p-4 whitespace-pre-wrap font-mono text-sm">
+                  {aiRecommendation}
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">
+                  ⚠️ Esta es una recomendación generada por IA y no constituye asesoría financiera. 
+                  Siempre haz tu propia investigación antes de tomar decisiones de inversión.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Price Chart */}
           <Card>
             <CardHeader>
               <CardTitle>Price History</CardTitle>
-              <CardDescription>Real-time price movement from Hermes</CardDescription>
+              <CardDescription>
+                Movimiento de precio en tiempo real desde Hermes
+                {priceHistory.length > 0 && ` • ${priceHistory.length} puntos de datos`}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>

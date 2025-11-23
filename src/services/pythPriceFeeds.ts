@@ -8,9 +8,9 @@
  * 3. Consume the price from the contract
  */
 
-import { EvmPriceServiceConnection } from '@pythnetwork/price-service-client';
 import { ethers } from 'ethers';
 import type { PriceData } from '../types';
+import axios from 'axios';
 
 // Hermes endpoint for price data
 const HERMES_ENDPOINT = 'https://hermes.pyth.network';
@@ -26,9 +26,6 @@ const PYTH_ABI = [
   'function getUpdateFee(bytes[] calldata updateData) external view returns (uint256 feeAmount)',
 ];
 
-// Initialize Hermes connection
-const priceService = new EvmPriceServiceConnection(HERMES_ENDPOINT);
-
 /**
  * Step 1: Fetch price data from Hermes
  * This retrieves the latest price update data from the Pyth Hermes API
@@ -37,18 +34,26 @@ export async function fetchPriceFromHermes(priceFeedId: string): Promise<string[
   try {
     console.log(`Fetching price for ${priceFeedId} from Hermes...`);
     
-    // Get the latest price feed update data
-    const priceFeeds = await priceService.getLatestPriceFeeds([priceFeedId]);
+    // Get the price update data from Hermes REST API
+    const response = await axios.get(
+      `${HERMES_ENDPOINT}/v2/updates/price/latest`,
+      {
+        params: {
+          ids: [priceFeedId],
+          encoding: 'hex',
+        },
+      }
+    );
     
-    if (!priceFeeds || priceFeeds.length === 0) {
+    if (!response.data || !response.data.binary || !response.data.binary.data) {
       throw new Error('No price feed data received from Hermes');
     }
 
     // Get the price update data (VAA - Verified Action Approval)
-    const updateData = await priceService.getPriceFeedsUpdateData([priceFeedId]);
+    const updateData = response.data.binary.data;
     
     console.log('Price data fetched successfully from Hermes');
-    return updateData;
+    return Array.isArray(updateData) ? updateData : [updateData];
   } catch (error) {
     console.error('Error fetching price from Hermes:', error);
     throw new Error(`Failed to fetch price from Hermes: ${error}`);
@@ -155,20 +160,27 @@ export function parsePrice(price: string, expo: number): number {
  */
 export async function getPriceFromHermes(priceFeedId: string): Promise<PriceData> {
   try {
-    const priceFeeds = await priceService.getLatestPriceFeeds([priceFeedId]);
+    // Get the latest price from Hermes REST API
+    const response = await axios.get(
+      `${HERMES_ENDPOINT}/v2/updates/price/latest`,
+      {
+        params: {
+          ids: [priceFeedId],
+        },
+      }
+    );
     
-    if (!priceFeeds || priceFeeds.length === 0) {
+    if (!response.data || !response.data.parsed || response.data.parsed.length === 0) {
       throw new Error('No price feed data received');
     }
 
-    const feed = priceFeeds[0];
-    const priceData = feed.getPriceNoOlderThan(60);
+    const priceData = response.data.parsed[0].price;
 
     return {
       price: priceData.price,
       expo: priceData.expo,
       conf: priceData.conf,
-      publishTime: priceData.publishTime,
+      publishTime: priceData.publish_time,
     };
   } catch (error) {
     console.error('Error getting price from Hermes:', error);
