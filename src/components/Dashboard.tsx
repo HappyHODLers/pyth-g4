@@ -5,8 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { RefreshCw, TrendingUp, Dice6, CheckCircle2, Clock } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { RefreshCw, TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
@@ -19,11 +18,6 @@ import {
   updatePriceOnChain,
   getOnChainPrice,
 } from '../services/pythPriceFeeds';
-import {
-  requestRandomNumber,
-  getGeneratedRandomNumber,
-  parseRandomNumberToRange,
-} from '../services/pythEntropy';
 import { formatPrice, formatTimestamp } from '../utils/helpers';
 
 export function Dashboard() {
@@ -34,14 +28,8 @@ export function Dashboard() {
     setCurrentPrice,
     priceHistory,
     addPriceToHistory,
-    randomNumberRequest,
-    setRandomNumberRequest,
-    generatedRandomNumber,
-    setGeneratedRandomNumber,
     isUpdatingPrice,
     setIsUpdatingPrice,
-    isRequestingRandom,
-    setIsRequestingRandom,
     isWalletConnected,
     walletAddress,
     setWalletConnected,
@@ -127,64 +115,6 @@ export function Dashboard() {
       console.error('Error reading on-chain price:', error);
       alert('Failed to read on-chain price. Make sure the price feed has been updated first.');
     }
-  };
-
-  // Request random number
-  const handleRequestRandom = async () => {
-    if (!provider || !signer) {
-      alert('Please connect your wallet first!');
-      return;
-    }
-
-    setIsRequestingRandom(true);
-    try {
-      const request = await requestRandomNumber(provider, signer);
-      setRandomNumberRequest(request);
-      setGeneratedRandomNumber(null);
-      
-      alert(`Random number requested! Request ID: ${request.requestId}\nWaiting for fulfillment...`);
-      
-      // Start polling for result
-      pollForRandomNumber(request.requestId);
-    } catch (error) {
-      console.error('Error requesting random number:', error);
-      alert('Failed to request random number. See console for details.');
-    } finally {
-      setIsRequestingRandom(false);
-    }
-  };
-
-  // Poll for random number result
-  const pollForRandomNumber = async (requestId: string) => {
-    if (!provider) return;
-
-    const maxAttempts = 10;
-    let attempts = 0;
-
-    const poll = async () => {
-      if (attempts >= maxAttempts) {
-        console.log('Stopped polling for random number');
-        return;
-      }
-
-      try {
-        const result = await getGeneratedRandomNumber(requestId, provider);
-        
-        if (result) {
-          setGeneratedRandomNumber(result.randomNumber);
-          setRandomNumberRequest(prev => prev ? { ...prev, status: 'fulfilled' } : null);
-          alert(`Random number generated: ${result.randomNumber}`);
-          return;
-        }
-
-        attempts++;
-        setTimeout(poll, 5000); // Poll every 5 seconds
-      } catch (error) {
-        console.error('Error polling for random number:', error);
-      }
-    };
-
-    poll();
   };
 
   // Get AI trading recommendation
@@ -306,14 +236,7 @@ RECOMENDACIÓN: [tu recomendación]
         </Card>
       )}
 
-      <Tabs defaultValue="price-feeds" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-gradient-to-r from-[#DC9F69]/30 via-orange-100 to-cyan-100 border-4 border-[#7E533D] rounded-3xl p-2 shadow-lg">
-          <TabsTrigger value="price-feeds" className="rounded-2xl font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#DC9F69] data-[state=active]:to-[#00B5E6] data-[state=active]:text-white data-[state=active]:shadow-md">📊 Price Feeds</TabsTrigger>
-          <TabsTrigger value="entropy" className="rounded-2xl font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#00B5E6] data-[state=active]:to-[#3E9138] data-[state=active]:text-white data-[state=active]:shadow-md">🎲 Entropy</TabsTrigger>
-        </TabsList>
-
-        {/* Price Feeds Tab */}
-        <TabsContent value="price-feeds" className="space-y-4">
+      <div className="space-y-4">
           {/* Price Feed Selector */}
           <Card className="border-4 border-[#00B5E6] rounded-3xl shadow-lg bg-gradient-to-br from-[#00B5E6]/20 to-cyan-50">
             <CardHeader>
@@ -570,128 +493,7 @@ RECOMENDACIÓN: [tu recomendación]
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        {/* Entropy Tab */}
-        <TabsContent value="entropy" className="space-y-4">
-          <Card className="border-4 border-[#7E533D] rounded-3xl shadow-xl bg-gradient-to-br from-[#DC9F69]/20 via-orange-50 to-cyan-50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-[#7E533D] font-black">
-                <Dice6 className="w-6 h-6" />
-                🎲 Pyth Entropy Random Number Generator
-              </CardTitle>
-              <CardDescription className="text-[#7E533D] font-medium">
-                Generate verifiable random numbers on-chain with cryptographic security 🔒✨
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Button 
-                onClick={handleRequestRandom}
-                disabled={!isWalletConnected || isRequestingRandom}
-                className="w-full rounded-2xl border-2 border-[#7E533D] shadow-lg hover:shadow-xl transition-all bg-gradient-to-r from-[#DC9F69] via-[#D92B29] to-[#00B5E6] text-white font-bold"
-                size="lg"
-              >
-                {isRequestingRandom ? (
-                  <>
-                    <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
-                    Requesting...
-                  </>
-                ) : (
-                  <>
-                    <Dice6 className="w-5 h-5 mr-2" />
-                    🎲 Request Random Number
-                  </>
-                )}
-              </Button>
-
-              {randomNumberRequest && (
-                <div className="border-4 border-[#DC9F69] rounded-3xl p-4 space-y-3 bg-gradient-to-br from-[#DC9F69]/30 to-orange-50 shadow-lg">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-[#7E533D]">📦 Request Status</span>
-                    <div className={`flex items-center gap-2 text-sm font-bold px-3 py-1 rounded-2xl border-2 ${
-                      randomNumberRequest.status === 'fulfilled' ? 'text-[#3E9138] bg-[#3E9138]/20 border-[#3E9138]' : 'text-[#D92B29] bg-[#D92B29]/20 border-[#D92B29]'
-                    }`}>
-                      {randomNumberRequest.status === 'fulfilled' ? (
-                        <><CheckCircle2 className="w-4 h-4" /> ✅ Fulfilled</>
-                      ) : (
-                        <><Clock className="w-4 h-4" /> ⏳ Pending</>
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-xs space-y-2 bg-white/80 rounded-2xl p-3 border-2 border-[#DC9F69]">
-                    <div className="font-medium text-[#7E533D]"><strong>🎫 Request ID:</strong> {randomNumberRequest.requestId}</div>
-                    <div className="font-medium text-[#7E533D]"><strong>🧱 Block:</strong> {randomNumberRequest.blockNumber}</div>
-                  </div>
-                </div>
-              )}
-
-              {generatedRandomNumber && (
-                <div className="border-4 border-[#3E9138] rounded-3xl p-4 space-y-3 bg-gradient-to-br from-[#3E9138]/20 to-[#00B5E6]/20 shadow-lg animate-in fade-in duration-500">
-                  <div className="text-sm font-black text-[#7E533D]">✨ Generated Random Number</div>
-                  <div className="font-mono text-xs break-all bg-white/90 p-3 rounded-2xl border-2 border-[#3E9138] font-medium text-[#7E533D]">
-                    {generatedRandomNumber}
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 text-center pt-2">
-                    <div className="border-4 border-[#DC9F69] rounded-2xl p-3 bg-gradient-to-br from-[#DC9F69]/20 to-orange-50 shadow-md hover:shadow-lg transition-shadow">
-                      <div className="text-xs text-[#7E533D] font-bold">🔢 1-100</div>
-                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#DC9F69] to-[#D92B29]">
-                        {parseRandomNumberToRange(generatedRandomNumber, 100)}
-                      </div>
-                    </div>
-                    <div className="border-4 border-[#00B5E6] rounded-2xl p-3 bg-gradient-to-br from-[#00B5E6]/20 to-cyan-50 shadow-md hover:shadow-lg transition-shadow">
-                      <div className="text-xs text-[#7E533D] font-bold">🔢 1-1000</div>
-                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00B5E6] to-[#3E9138]">
-                        {parseRandomNumberToRange(generatedRandomNumber, 1000)}
-                      </div>
-                    </div>
-                    <div className="border-4 border-[#D92B29] rounded-2xl p-3 bg-gradient-to-br from-[#D92B29]/20 to-orange-50 shadow-md hover:shadow-lg transition-shadow">
-                      <div className="text-xs text-[#7E533D] font-bold">🎲 1-6 (Dice)</div>
-                      <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D92B29] to-[#DC9F69]">
-                        {parseRandomNumberToRange(generatedRandomNumber, 6)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Entropy Use Cases */}
-          <Card className="border-4 border-[#DC9F69] rounded-3xl shadow-lg bg-gradient-to-br from-[#DC9F69]/20 to-orange-50">
-            <CardHeader>
-              <CardTitle className="text-[#7E533D] font-black">🌟 Use Cases for Pyth Entropy</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#DC9F69] hover:shadow-md transition-shadow">
-                  <span className="text-3xl">🎮</span>
-                  <div>
-                    <strong className="text-[#7E533D]">Gaming:</strong> <span className="text-[#7E533D] font-medium">Fair loot drops, enemy spawns, procedural generation</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#D92B29] hover:shadow-md transition-shadow">
-                  <span className="text-3xl">🎨</span>
-                  <div>
-                    <strong className="text-[#7E533D]">NFTs:</strong> <span className="text-[#7E533D] font-medium">Randomized traits, reveal mechanics, generative art</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#00B5E6] hover:shadow-md transition-shadow">
-                  <span className="text-3xl">🎲</span>
-                  <div>
-                    <strong className="text-[#7E533D]">Lotteries:</strong> <span className="text-[#7E533D] font-medium">Provably fair winner selection, prize distribution</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 bg-white/80 rounded-2xl p-3 border-2 border-[#3E9138] hover:shadow-md transition-shadow">
-                  <span className="text-3xl">📊</span>
-                  <div>
-                    <strong className="text-[#7E533D]">DeFi:</strong> <span className="text-[#7E533D] font-medium">Random sampling, fair liquidations, dynamic yields</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        </div>
     </div>
   );
 }
