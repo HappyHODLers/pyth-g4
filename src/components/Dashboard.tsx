@@ -570,41 +570,6 @@ RECOMENDACIÓN: [tu recomendación]
               </div>
             </CardContent>
           </Card>
-
-          {/* Pull Oracle Workflow Explanation */}
-          <Card className="border-4 border-[#3E9138] rounded-3xl shadow-lg bg-gradient-to-br from-[#3E9138]/20 to-[#00B5E6]/20">
-            <CardHeader>
-              <CardTitle className="text-[#7E533D] font-black">⛓️ Pyth Pull Oracle Workflow</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#DC9F69] to-[#00B5E6] flex items-center justify-center flex-shrink-0 shadow-md border-2 border-[#DC9F69]">
-                    <span className="text-white font-black">1</span>
-                  </div>
-                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-[#DC9F69]">
-                    <strong className="text-[#7E533D]">🔽 Fetch from Hermes:</strong> <span className="text-[#7E533D] font-medium">Price data is retrieved from Pyth's Hermes API</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#00B5E6] to-[#3E9138] flex items-center justify-center flex-shrink-0 shadow-md border-2 border-[#00B5E6]">
-                    <span className="text-white font-black">2</span>
-                  </div>
-                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-[#00B5E6]">
-                    <strong className="text-[#7E533D]">📤 Update On-Chain:</strong> <span className="text-[#7E533D] font-medium">Submit price data to the Pyth contract using updatePriceFeeds</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#3E9138] to-[#DC9F69] flex items-center justify-center flex-shrink-0 shadow-md border-2 border-[#3E9138]">
-                    <span className="text-white font-black">3</span>
-                  </div>
-                  <div className="bg-white/80 rounded-2xl px-3 py-2 flex-1 border-2 border-[#3E9138]">
-                    <strong className="text-[#7E533D]">✅ Consume Price:</strong> <span className="text-[#7E533D] font-medium">Your smart contract reads the fresh price from the Pyth contract</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </TabsContent>
 
         {/* Entropy Tab */}
